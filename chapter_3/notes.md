@@ -41,4 +41,4 @@ schema_registry_url = 'http://localhost:8083'
 
 ```
 
-We can also use kafka cloud schema registry, or it's version on kubernetes (e.g. strimzi https://github.com/lsst-sqre/strimzi-registry-operator)
+We can also use kafka cloud schema registry, or it's version on kubernetes (e.g. strimzi https://github.com/lsst-sqre/strimzi-registry-operator) and more.
