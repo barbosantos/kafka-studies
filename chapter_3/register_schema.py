@@ -3,7 +3,7 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry import Schema
 
 # imort from constants
-from constants import SCHEMA_STR
+from chapter_3.producers.constants import SCHEMA_STR
 
 schema_registry_url = "http://localhost:8083"
 kafka_topic = "test-blog"
