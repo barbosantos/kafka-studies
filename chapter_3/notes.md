@@ -16,6 +16,7 @@ There are different types of serializers. For example string serializer, json se
 ### Avro 
 
 Avro is a fast and compact data serialization framework used for storing and communicating data. It uses schemas to define data structures, supports dynamic typing, binary encoding for efficiency, and is language-independent. Avro's schema evolution feature enables backward and forward compatibility between different versions of schemas.
+
 Avro has schema validation bultin. On "avro_hello_world.py" file, if we change the schema when writing to the avro file, and it's not matching, an exception is thrown.
 
 ## Partitioning
@@ -40,4 +41,4 @@ schema_registry_url = 'http://localhost:8083'
 
 ```
 
-We can also use kafka cloud schema registry, or it's version on kubernetes (e.g. strimzi https://github.com/lsst-sqre/strimzi-registry-operator)
+We can also use kafka cloud schema registry, or it's version on kubernetes (e.g. strimzi https://github.com/lsst-sqre/strimzi-registry-operator) and more.
