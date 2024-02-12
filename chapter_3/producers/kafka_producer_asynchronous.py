@@ -5,7 +5,7 @@ conf = {'bootstrap.servers': 'localhost:9092',
         'client.id': socket.gethostname()}
 
 producer = Producer(conf)
-topic = "kafka-test"
+topic = "wikimedia"
 
 
 def acked(err, msg):

@@ -108,4 +108,5 @@ def update_schema(schema_registry_url, schema_registry_subject, schema_str):
     return schema_id
 
 
+schema_id = register_schema(schema_registry_url, schema_registry_subject, SCHEMA_STR)
 avro_producer(source_url, kafka_url, schema_registry_url, schema_registry_subject)
