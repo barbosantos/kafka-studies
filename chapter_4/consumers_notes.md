@@ -41,6 +41,13 @@ When we create the consumer group, with its consumer spec, the first consumer to
 The leader receives the list of all consumers and assigns partitions to them. Then, the leader sends back the list of assigments to the coordinator.
 If a consumer dies, the process of rebalancing is triggered again. With exception of the leader, consumers only see the partitions assigned to them (own assignments).
 
+### Static Group Membership
+
+The normal behavior of rebalance is that when a consumer leaves and comes back a new consumer ID is assigned, and probably it will consume different partitions from before.
+With static consumer group, the consumer will have a static ID, so that when it comes back it can be reassinged to its older partitions.
+Advantage is that no rebalance will be needed. However, we need to make sure that when it comes back it will be able to catch up with the new messages and not lag behind. We also need to have in mind about
+timeout, how long should we wait until the consumer comes back? If takes too long (more than ```session.timeout.ms```) we need to assign the idle partition to another consumer (rebalance).
+
 
 
 
