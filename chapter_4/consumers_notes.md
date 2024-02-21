@@ -28,7 +28,7 @@ There are two main methods for rebalancing:
 ### Eager rebalance
 
 In this method, all partitions are revoked, meaning consumers lose their ownership of the partitions, for a short time.
-During this short time no messages consumed. Then, after a while, a new reassignet is made for the consumers.
+During this short time no messages consumed. Then, after a while, a new reassignment is made for the consumers.
 
 ### Cooperative rebalance
 
@@ -38,13 +38,13 @@ Advantage is that you don't need to stop everything and can still process the me
 ### How consumers are elected?
 
 When we create the consumer group, with its consumer spec, the first consumer to send the JoinGroup method to the group coordinator (broker) will be elected as group leader.
-The leader receives the list of all consumers and assigns partitions to them. Then, the leader sends back the list of assigments to the coordinator.
+The leader receives the list of all consumers and assigns partitions to them. Then, the leader sends back the list of assignments to the coordinator.
 If a consumer dies, the process of rebalancing is triggered again. With exception of the leader, consumers only see the partitions assigned to them (own assignments).
 
 ### Static Group Membership
 
 The normal behavior of rebalance is that when a consumer leaves and comes back a new consumer ID is assigned, and probably it will consume different partitions from before.
-With static consumer group, the consumer will have a static ID, so that when it comes back it can be reassinged to its older partitions.
+With static consumer group, the consumer will have a static ID, so that when it comes back it can be reassigned to its older partitions.
 Advantage is that no rebalance will be needed. However, we need to make sure that when it comes back it will be able to catch up with the new messages and not lag behind. We also need to have in mind about
 timeout, how long should we wait until the consumer comes back? If it takes too long (more than ```session.timeout.ms```) we need to assign the idle partition to another consumer (rebalance).
 
@@ -66,10 +66,10 @@ Alternatively, we can send in the group id (name of consumer group)
 ### Poll method
 
 After creating a consumer object, we use the ```Poll()``` method to read messages from the kafka topic. ```Poll()``` return a list of records if any found.
-Another important factor had to do with consumer lifetime. As we saw on last sessions, if the consumer stops sending hearbeats to the kafka broker it will be considered dead,
+Another important factor had to do with consumer lifetime. As we saw on last sessions, if the consumer stops sending heartbeats to the kafka broker it will be considered dead,
 and the partitions it had ownership will be reassigned (rebalance). The method responsible for sending the heartbeats is ```Poll()```. 
 
-The paramater ```max.poll.interval.ms``` is used to configure how long the broker will wait to receive heartbeats from ```Poll()``` before considering the consumer dead.
+The parameter ```max.poll.interval.ms``` is used to configure how long the broker will wait to receive heartbeats from ```Poll()``` before considering the consumer dead.
 
 > **_NOTE:_** There are more specific parameters to deal with consumer life/heartbeats. For example,  ```heartbeat.interval.ms```, which controls how frequently
 the Kafka consumer will send a heartbeat to the group coordinator, and
