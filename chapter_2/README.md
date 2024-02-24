@@ -1,3 +1,9 @@
+## Some configuration parameters for Kafka
+
+For brokers, cluster and topics. 
+
+We gonna see more configuration (i.e. for producers and consumers) further on the other chapter notes.
+
 ### Broker Configuration Parameters:
 **broker.id:** Unique identifier for the broker within the Kafka cluster.
 **port:** Port number on which the broker listens for client connections.
@@ -45,3 +51,13 @@
 **preallocate:** Whether to preallocate files for new segments of the topic log.
 
 
+### How many brokers for a cluster?
+
+**Disk Capacity:** Determine how much data needs to be retained and how much storage each broker can handle. If a single broker can store 2 TB and you need to retain 10 TB of data, you'd need at least 5 brokers. Additionally, increasing the replication factor will increase storage requirements. Replicas in this case refer to the number of different brokers a single par tition is copied to. This means that this same cluster, configured with a replication of
+2, now needs to contain at least 10 brokers
+
+**Capacity to Handle Requests:** Consider the capacity of the cluster to handle requests, which can be affected by disk, CPU, and network bottlenecks. It's recommended to limit the number of partition replicas per broker and per cluster to avoid bottlenecks.
+
+**CPU and Network Capacity:** While CPU may not be a major bottleneck, excessive client connections and requests can strain the CPU. Monitoring CPU usage and expanding capacity as needed can ensure better performance. Additionally, consider the capacity of network interfaces to handle client traffic, especially during peak times or bursts of traffic.
+
+**Scaling Out:** Scaling out to more brokers may be necessary to address performance concerns caused by limitations in disk throughput or available system memory. Adding more brokers can help distribute the workload and improve overall cluster performance.
