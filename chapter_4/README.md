@@ -81,6 +81,27 @@ the Kafka consumer will send a heartbeat to the group coordinator, and
 
 One thread per consumer. 
 
+### Consumer configuration parameters
+
+## Commits and Offsets
+
+Kafka, as opposed to other Java Message Services, doesn't keep track of acks when consuming messages.
+Instead, it uses offsets, which represent the position of the messages in the partitions. After reading and processing messages (e.g. by getting the records from Poll()), consumers can commit an offset to say up to what point they have successfully processed the messages.
+So, if a rebalance happens and new consumers are assigned to new partitions, they can know where to start picking up again the last unprocessed messages. However, if the application is wrongly designed and the committed offsets don't match what actually has been processed, two different situations can appear:
+
+1) Reprocessing messages:
+   - If the commit offset is lower than what was actually processed.
+2) Losing messages:
+   - If the commit offset is larger than what was actually procesed.
+
+Note that the offsets itself are already present in the partitions when we are reading. It's the job of the kafka broker to assign the offsets after the producers send the messages to the topics/partitions. What the consumer is doing when committing the offset, is just specifying the last offset it successfully processed, and assuming all the offsets before were also successfully processed.
+
+### Automatic commits
+
+Automatic commits are the default behavior when committing offsets. It works by committing the offsets after an interval of time, controlled by the parameter ```auto.commit.interval.ms``` and ```enable.auto.commit=true```. Every time we call ```Poll()``` it checks if it's time to commit, and if it is, it commits the offset.
+The risk here is if something happens just before the time passed, and we actually processed the messages, but didn't had the time to commit. Then, when running again we will process the same messages again.
+In short, automatic commits are convenient, but they don’t give developers enough control to
+avoid duplicate messages.
 
 
 
